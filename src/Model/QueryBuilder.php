@@ -28,7 +28,7 @@ class QueryBuilder
     protected \PDOStatement $statement;
     protected \PDO $pdo;
 
-    public function __construct(string $entity, string $alias = null)
+    public function __construct(\PDO $pdo, string $entity, string $alias = null)
     {
         $this->entity = $entity;
         try {
@@ -36,9 +36,7 @@ class QueryBuilder
         } catch (ReflectionException $e) {
         }
         $this->alias = $alias;
-
-        $db = new Database();
-        $this->pdo = $db->getConnection();
+        $this->pdo = $pdo;
     }
 
     /**

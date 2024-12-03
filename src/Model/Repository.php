@@ -6,15 +6,22 @@ class Repository implements RepositoryInterface
 {
 
     private string $entityClass;
+    private Database $db;
 
     public function __construct(string $entityClass)
+    {
+        $this->entityClass = $entityClass;
+        $this->db = new Database();
+    }
+
+    public function changeEntityClass(string $entityClass): void
     {
         $this->entityClass = $entityClass;
     }
 
     protected function queryBuilder(string $alias = null): QueryBuilder
     {
-        return new QueryBuilder($this->entityClass, $alias);
+        return new QueryBuilder($this->db->getConnection(), $this->entityClass, $alias);
     }
 
     private function makeCondition(string $key, $value): string
