@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/treptowkolleg/env.git",
-                "reference": "18336639bbe53e8fcc6fbeb758dd351d8508d321"
+                "reference": "2def88f086f08075f5ae4fe68d3ceeb0bcbe9f98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/treptowkolleg/env/zipball/18336639bbe53e8fcc6fbeb758dd351d8508d321",
-                "reference": "18336639bbe53e8fcc6fbeb758dd351d8508d321",
+                "url": "https://api.github.com/repos/treptowkolleg/env/zipball/2def88f086f08075f5ae4fe68d3ceeb0bcbe9f98",
+                "reference": "2def88f086f08075f5ae4fe68d3ceeb0bcbe9f98",
                 "shasum": ""
             },
             "require": {
@@ -46,7 +46,7 @@
                 "issues": "https://github.com/treptowkolleg/env/issues",
                 "source": "https://github.com/treptowkolleg/env/tree/master"
             },
-            "time": "2024-12-03T12:22:21+00:00"
+            "time": "2024-12-03T12:24:57+00:00"
         }
     ],
     "packages-dev": [],
