@@ -9,4 +9,7 @@ enum Types
     case Boolean;
     case DateTime;
     case Json;
+    case ManyToOne;
+    case OneToMany;
+    case ManyToMany;
 }
