@@ -77,12 +77,13 @@ class EntityManager
         return "$key = :$key";
     }
 
-    public function persist($entity)
+
+    public function persist($entity, int $id = null): void
     {
         try {
             $class = new \ReflectionClass($entity);
-            if($entity->getId() === null) {
-                $this->db->prepare("INSERT INTO {$this->setTableName($class)}({$this->setColumns($class)}) VALUES ({$this->setValueNames($class)})");
+            if($id == null) {
+                $statement = $this->db->prepare("INSERT INTO {$this->setTableName($class)}({$this->setColumns($class)}) VALUES ({$this->setValueNames($class)})");
             } else {
                 $this->db->prepare("UPDATE entity SET {$this->setValues($class)} WHERE id = :id");
             }
