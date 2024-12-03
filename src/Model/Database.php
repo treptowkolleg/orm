@@ -1,9 +1,9 @@
 <?php
 
-namespace TreptowKolleg\Model;
+namespace TreptowKolleg\ORM\Model;
 
-use TreptowKolleg\DatabaseContainer;
-use TreptowKolleg\Environment;
+use TreptowKolleg\Environment\DatabaseContainer;
+use TreptowKolleg\Environment\Environment;
 
 class Database
 {

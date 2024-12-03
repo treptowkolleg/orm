@@ -1,6 +1,6 @@
 <?php
 
-namespace TreptowKolleg\ORM;
+namespace TreptowKolleg\ORM\ORM;
 
 #[\Attribute] class Id
 {

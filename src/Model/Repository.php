@@ -1,6 +1,6 @@
 <?php
 
-namespace TreptowKolleg\Model;
+namespace TreptowKolleg\ORM\Model;
 
 class Repository implements RepositoryInterface
 {

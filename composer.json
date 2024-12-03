@@ -6,7 +6,7 @@
   "license": "mit",
   "autoload": {
     "psr-4": {
-      "TreptowKolleg\\": "src/"
+      "TreptowKolleg\\ORM\\": "src/"
     }
   },
   "authors": [

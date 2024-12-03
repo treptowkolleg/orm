@@ -1,11 +1,10 @@
 <?php
 
-namespace TreptowKolleg\Model;
+namespace TreptowKolleg\ORM\Model;
 
 use ReflectionClass;
 use ReflectionException;
-use TreptowKolleg\Environment;
-use TreptowKolleg\ORM\Column;
+use TreptowKolleg\ORM\ORM\Column;
 
 class QueryBuilder
 {
