@@ -15,10 +15,10 @@
       "email": "123292918+treptowkolleg@users.noreply.github.com"
     }
   ],
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "require": {
     "php": ">=8.1",
     "ext-pdo": "*",
-    "treptowkolleg/env": "@stable"
+    "treptowkolleg/env": "dev-master"
   }
 }

@@ -4,26 +4,27 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "869fa19a13c47234b8b4b6389ca90ae6",
+    "content-hash": "e0ef33d0cb435013ce387ffd88fbe873",
     "packages": [
         {
             "name": "treptowkolleg/env",
-            "version": "1.0.6",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/treptowkolleg/env.git",
-                "reference": "c42ee30a16566cae4b40f3ec886fa515f85cf216"
+                "reference": "18336639bbe53e8fcc6fbeb758dd351d8508d321"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/treptowkolleg/env/zipball/c42ee30a16566cae4b40f3ec886fa515f85cf216",
-                "reference": "c42ee30a16566cae4b40f3ec886fa515f85cf216",
+                "url": "https://api.github.com/repos/treptowkolleg/env/zipball/18336639bbe53e8fcc6fbeb758dd351d8508d321",
+                "reference": "18336639bbe53e8fcc6fbeb758dd351d8508d321",
                 "shasum": ""
             },
             "require": {
                 "ext-pdo": "*",
                 "php": ">=8.1"
             },
+            "default-branch": true,
             "type": "package",
             "autoload": {
                 "psr-4": {
@@ -43,16 +44,16 @@
             "description": "file system package",
             "support": {
                 "issues": "https://github.com/treptowkolleg/env/issues",
-                "source": "https://github.com/treptowkolleg/env/tree/1.0.6"
+                "source": "https://github.com/treptowkolleg/env/tree/master"
             },
-            "time": "2024-12-03T12:19:23+00:00"
+            "time": "2024-12-03T12:22:21+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
-        "treptowkolleg/env": 0
+        "treptowkolleg/env": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
