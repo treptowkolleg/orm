@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "treptowkolleg/env",
-            "version": "1.0.5",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/treptowkolleg/env.git",
-                "reference": "29f9f885c6d01e15ec664b5c704fbb3e417ec911"
+                "reference": "c42ee30a16566cae4b40f3ec886fa515f85cf216"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/treptowkolleg/env/zipball/29f9f885c6d01e15ec664b5c704fbb3e417ec911",
-                "reference": "29f9f885c6d01e15ec664b5c704fbb3e417ec911",
+                "url": "https://api.github.com/repos/treptowkolleg/env/zipball/c42ee30a16566cae4b40f3ec886fa515f85cf216",
+                "reference": "c42ee30a16566cae4b40f3ec886fa515f85cf216",
                 "shasum": ""
             },
             "require": {
@@ -43,9 +43,9 @@
             "description": "file system package",
             "support": {
                 "issues": "https://github.com/treptowkolleg/env/issues",
-                "source": "https://github.com/treptowkolleg/env/tree/1.0.5"
+                "source": "https://github.com/treptowkolleg/env/tree/1.0.6"
             },
-            "time": "2024-12-03T12:15:20+00:00"
+            "time": "2024-12-03T12:19:23+00:00"
         }
     ],
     "packages-dev": [],
