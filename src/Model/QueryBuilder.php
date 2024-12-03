@@ -37,8 +37,8 @@ class QueryBuilder
         }
         $this->alias = $alias;
 
-        $environment = new Environment();
-        $this->pdo = $environment->getDatabaseObject();
+        $db = new Database();
+        $this->pdo = $db->getConnection();
     }
 
     /**
