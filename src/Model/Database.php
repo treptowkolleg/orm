@@ -2,6 +2,7 @@
 
 namespace TreptowKolleg\Model;
 
+use TreptowKolleg\DatabaseContainer;
 use TreptowKolleg\Environment;
 
 class Database
@@ -13,6 +14,7 @@ class Database
     {
         if (null == $db) {
             $env = new Environment();
+            $env->addContainer(new DatabaseContainer());
             $this->db = $env->getDatabaseObject();
         } else {
             $this->db = $db;
