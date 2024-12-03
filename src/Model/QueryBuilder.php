@@ -75,7 +75,7 @@ class QueryBuilder
         return rtrim($columns, ',');
     }
 
-    private function generateSnakeTailString(string $value): string
+    public function generateSnakeTailString(string $value): string
     {
         $valueAsArray = preg_split('/(?=[A-Z])/', $value);
         return strtolower(ltrim(implode('_', $valueAsArray),'_'));
