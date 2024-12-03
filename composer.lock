@@ -1,0 +1,65 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "869fa19a13c47234b8b4b6389ca90ae6",
+    "packages": [
+        {
+            "name": "treptowkolleg/env",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/treptowkolleg/env.git",
+                "reference": "bed264c6dd118fe3805ca043badb09645c844491"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/treptowkolleg/env/zipball/bed264c6dd118fe3805ca043badb09645c844491",
+                "reference": "bed264c6dd118fe3805ca043badb09645c844491",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pdo": "*",
+                "php": ">=8.1"
+            },
+            "type": "package",
+            "autoload": {
+                "psr-4": {
+                    "TreptowKolleg\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "mit"
+            ],
+            "authors": [
+                {
+                    "name": "AG Informatik",
+                    "email": "123292918+treptowkolleg@users.noreply.github.com"
+                }
+            ],
+            "description": "file system package",
+            "support": {
+                "issues": "https://github.com/treptowkolleg/env/issues",
+                "source": "https://github.com/treptowkolleg/env/tree/1.0.4"
+            },
+            "time": "2024-12-01T21:55:13+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "treptowkolleg/env": 0
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=8.1",
+        "ext-pdo": "*"
+    },
+    "platform-dev": [],
+    "plugin-api-version": "2.6.0"
+}
