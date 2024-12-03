@@ -7,8 +7,6 @@ class Repository implements RepositoryInterface
 
     private string $entityClass;
 
-    private QueryBuilder $qm;
-
     public function __construct(string $entityClass)
     {
         $this->entityClass = $entityClass;
@@ -16,27 +14,99 @@ class Repository implements RepositoryInterface
 
     protected function queryBuilder(string $alias = null): QueryBuilder
     {
-        return $this->qm = new QueryBuilder($this->entityClass, $alias);
+        return new QueryBuilder($this->entityClass, $alias);
+    }
+
+    private function makeCondition(string $key, $value): string
+    {
+        return match (strtoupper(gettype($value))) {
+            'NULL' => "$key IS NULL",
+            'BOOLEAN' => ($value) ? "$key IS NOT NULL" : "$key IS NULL",
+            default => "$key = :$key",
+        };
     }
 
     public function find(int|string $id)
     {
-        // TODO: Implement find() method.
+        return $this->queryBuilder()
+            ->selectOrm()
+            ->andWhere('id = :id')
+            ->setParameter('id',$id)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
     }
 
     public function findOneBy(array $data)
     {
-        // TODO: Implement findOneBy() method.
+        $query = $this->queryBuilder()->selectOrm();
+
+        if(0 !== count($data))
+        {
+            foreach ($data as $key => $value)
+            {
+                $query->andWhere($this->makeCondition($key, $value));
+                if(!is_bool($value))
+                {
+                    $query->setParameter($key, $value);
+                }
+            }
+        }
+
+        return $query->setMaxResults(1) ->getQuery()->getOneOrNullResult();
     }
 
     public function findBy(array $data, array $orderBy = [], int $limit = null, int $offset = null): array
     {
-        // TODO: Implement findBy() method.
+        $query = $this->queryBuilder()
+            ->selectOrm()
+            ->orderBy($orderBy)
+        ;
+
+        if(0 !== count($data))
+        {
+            foreach ($data as $key => $value)
+            {
+                $query->andWhere($this->makeCondition($key, $value));
+                if(!is_bool($value))
+                {
+                    $query->setParameter($key, $value);
+                }
+            }
+        }
+
+        if(null !== $limit)
+        {
+            $query->setMaxResults($limit);
+        }
+
+        if(null !== $offset)
+        {
+            $query->setFirstResult($offset);
+        }
+
+        return $query->getQuery()->getResult();
     }
 
     public function findAll(array $orderBy = [], int $limit = null, int $offset = null): array
     {
-        // TODO: Implement findAll() method.
+        $query = $this->queryBuilder()
+            ->selectOrm()
+            ->orderBy($orderBy)
+        ;
+
+        if(null !== $limit)
+        {
+            $query->setMaxResults($limit);
+        }
+
+        if(null !== $offset)
+        {
+            $query->setFirstResult($offset);
+        }
+
+        return $query->getQuery()->getResult();
     }
 
 }
