@@ -330,7 +330,6 @@ class QueryBuilder
         {
             $result = $this->statement->fetchAll($this->pdo::FETCH_CLASS, $this->entity);
         }
-        $this->pdo->commit();
         return $result;
     }
 
@@ -344,7 +343,6 @@ class QueryBuilder
         {
             $result =  $this->statement->fetchObject($this->entity);
         }
-        $this->pdo->commit();
         return $result;
     }
 
@@ -361,7 +359,6 @@ class QueryBuilder
                 $result = $this->statement->fetchColumn();
             }
         }
-        $this->pdo->commit();
         return $result;
     }
 
