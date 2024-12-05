@@ -41,6 +41,12 @@ class Repository implements RepositoryInterface
         };
     }
 
+    public function generateSnakeTailString(string $value): string
+    {
+        $valueAsArray = preg_split('/(?=[A-Z])/', $value);
+        return strtolower(ltrim(implode('_', $valueAsArray),'_'));
+    }
+
     public function find(int|string $id)
     {
         return $this->queryBuilder()
@@ -61,6 +67,7 @@ class Repository implements RepositoryInterface
         {
             foreach ($data as $key => $value)
             {
+                $key = $this->generateSnakeTailString($key);
                 $query->andWhere($this->makeCondition($key, $value));
                 if(!is_bool($value))
                 {
@@ -83,6 +90,7 @@ class Repository implements RepositoryInterface
         {
             foreach ($data as $key => $value)
             {
+                $key = $this->generateSnakeTailString($key);
                 $query->andWhere($this->makeCondition($key, $value));
                 if(!is_bool($value))
                 {
