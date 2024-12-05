@@ -308,7 +308,9 @@ class QueryBuilder
 
         $this->query['offset'] = $this->offset;
 
-        $this->statement = $this->pdo->prepare( implode(' ',$this->query));
+        $this->statement = $this->pdo->prepare( $query = implode(' ',$this->query));
+
+        echo "$query\n";
 
         foreach ($this->parameters as $key => $value)
         {

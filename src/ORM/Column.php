@@ -10,7 +10,7 @@ namespace TreptowKolleg\ORM\ORM;
     private int $length;
     private bool $nullable;
 
-    public function __construct(string $name = null, Types $type = Types::String, int $length = 255, bool $nullable = true)
+    public function __construct(string $name = null, Types $type = Types::String, int $length = 255, bool $nullable = false)
     {
         $this->name = $name;
         $this->type = $type;
