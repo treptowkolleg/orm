@@ -20,7 +20,7 @@ class Database
             $this->db = $db;
         }
         $this->db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        $this->db->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_CLASS);
+        $this->db->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_PROPS_LATE);
         $this->db->setAttribute(\PDO::ATTR_CASE, \PDO::CASE_NATURAL);
     }
 
