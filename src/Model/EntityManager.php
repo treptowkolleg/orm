@@ -92,7 +92,7 @@ class EntityManager
             $query .= ", FOREIGN KEY ({$column["column"]}) REFERENCES $table({$column["fk"]})";
         }
         $query .= ")";
-        $query .= "DEFAULT CHARACTER SET utf8 COLLATE utf8mb4_unicode_ci";
+        $query .= "DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
 
         echo "$query\n";
         $statement = $this->db->prepare($query);
