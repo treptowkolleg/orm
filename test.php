@@ -6,7 +6,7 @@ use TreptowKolleg\ORM\ORM;
 
 require_once 'vendor/autoload.php';
 
-class Teacher
+class Pupil
 {
 
     #[ORM\Id]
@@ -50,16 +50,18 @@ class Teacher
 
 
 $em = new EntityManager();
+$em->createTable(Pupil::class);
 
-$teacher = new Teacher();
-$teacher->setFirstname('John');
-$teacher->setLastname('Doe');
+$pupil = new Pupil();
+$pupil->setFirstname('John');
+$pupil->setLastname('Doe');
 
-$ben = (new Repository(Teacher::class))->findOneBy(['firstname' => 'Benjamin']);
-$ben->setLastname('Voigt');
+$ben = (new Repository(Pupil::class))->findOneBy(['firstname' => 'Benjamin']);
+if($ben) {
+    $ben->setLastname('Voigt');
+    $em->persist($ben);
+}
 
-$em->createTable($teacher);
-$em->persist($teacher);
-$em->persist($ben);
+$em->persist($pupil);
 $em->flush();
 

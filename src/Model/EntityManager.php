@@ -28,9 +28,16 @@ class EntityManager
         $this->db->beginTransaction();
     }
 
-    public function createTable(object $entity): void
+    public function createTable(object|string $entity): void
     {
-        $this->reflectionClass = new \ReflectionClass($entity);
+        if(is_string($entity)) {
+            $entity = new $entity();
+        }
+        try {
+            $this->reflectionClass = new \ReflectionClass($entity);
+        } catch (\ReflectionException $e) {
+
+        }
         $this->entity = $entity;
         if(!$this->db->inTransaction())
             $this->db->beginTransaction();
