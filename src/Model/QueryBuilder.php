@@ -310,7 +310,7 @@ class QueryBuilder
 
         $this->statement = $this->pdo->prepare( $query = implode(' ',$this->query));
 
-        echo "$query\n";
+        if(defined("DEBUG")) echo "$query\n";
 
         foreach ($this->parameters as $key => $value)
         {

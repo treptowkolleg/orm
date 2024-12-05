@@ -39,6 +39,7 @@ class EntityManager
             $this->reflectionClass = new \ReflectionClass($entity);
             $this->setTableName();
             $query = "DROP TABLE IF EXISTS {$this->tableName}";
+            if(defined("DEBUG")) echo "$query\n";
             $statement = $this->db->prepare($query);
             $statement->execute();
             $this->reset();
@@ -111,7 +112,7 @@ class EntityManager
         $query .= ")";
         $query .= "DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
 
-        echo "$query\n";
+        if(defined("DEBUG")) echo "$query\n";
         $statement = $this->db->prepare($query);
         $statement->execute();
         $statement->closeCursor();
@@ -201,7 +202,7 @@ class EntityManager
         }
         $statement = $this->db->prepare($query =implode(" ", $this->query));
 
-        echo "$query\n";
+        if(defined("DEBUG")) echo "$query\n";
 
         foreach($this->parameters as $key => $value) {
             $statement->bindValue($key, $value);
