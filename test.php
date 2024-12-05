@@ -6,6 +6,19 @@ use TreptowKolleg\ORM\ORM;
 
 require_once 'vendor/autoload.php';
 
+class TeacherRepository extends Repository
+{
+    public function __construct()
+    {
+        parent::__construct(Teacher::class);
+    }
+
+    public function search(string $term): string
+    {
+        return "";
+    }
+}
+
 class Teacher
 {
 
@@ -111,6 +124,12 @@ class EmployeeList
 
 }
 
+$tr = new TeacherRepository();
+$a = $tr->search("Haööp");
+$t = $tr->find(1);
+
+echo $t->getFirstname();
+
 $em = new EntityManager();
 $em->createTable(EmployeeList::class);
 
@@ -118,7 +137,7 @@ $pupil = new Teacher();
 $pupil->setFirstname('John');
 $pupil->setLastname('Doe');
 
-$ben = (new Repository(Teacher::class))->findOneBy(['firstname' => 'Benjamin']);
+$ben = Repository::new(Teacher::class)->findOneBy(['firstname' => 'Benjamin']);
 echo $ben?->getFirstname() ?: "Kein Datensatz gefunden";
 if($ben) {
     $ben->setLastname('Voigt');

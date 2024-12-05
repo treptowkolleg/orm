@@ -2,18 +2,26 @@
 
 namespace TreptowKolleg\ORM\Model;
 
+use  TreptowKolleg\ORM\ORM;
+
 class Repository implements RepositoryInterface
 {
 
     private string $entityClass;
     private Database $db;
 
-    public function __construct(string $entityClass)
+    public function __construct(string $entityClass = null)
     {
-        $this->entityClass = $entityClass;
+        if ($entityClass) $this->entityClass = $entityClass;
         $this->db = new Database();
         $this->db->getConnection()->beginTransaction();
     }
+
+    public static function new(string $entityClass): Repository
+    {
+        return new self($entityClass);
+    }
+
 
     public function changeEntityClass(string $entityClass): void
     {
