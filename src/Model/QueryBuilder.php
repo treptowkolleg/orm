@@ -325,11 +325,13 @@ class QueryBuilder
      */
     public function getResult(): array
     {
+        $result = [];
         if($this->statement->execute())
         {
-            return $this->statement->fetchAll($this->pdo::FETCH_CLASS, $this->entity);
+            $result = $this->statement->fetchAll($this->pdo::FETCH_CLASS, $this->entity);
         }
-        return [];
+        $this->pdo->commit();
+        return $result;
     }
 
     /**
@@ -337,11 +339,13 @@ class QueryBuilder
      */
     public function getOneOrNullResult(): mixed
     {
+        $result = false;
         if($this->statement->execute())
         {
-            return $this->statement->fetchObject($this->entity);
+            $result =  $this->statement->fetchObject($this->entity);
         }
-        return false;
+        $this->pdo->commit();
+        return $result;
     }
 
     /**
@@ -349,14 +353,16 @@ class QueryBuilder
      */
     public function getSingleScalarResult(): mixed
     {
+        $result = false;
         if($this->statement->execute())
         {
             if($this->statement->rowCount() == 1)
             {
-                return $this->statement->fetchColumn();
+                $result = $this->statement->fetchColumn();
             }
         }
-        return false;
+        $this->pdo->commit();
+        return $result;
     }
 
     /**

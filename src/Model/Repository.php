@@ -12,6 +12,7 @@ class Repository implements RepositoryInterface
     {
         $this->entityClass = $entityClass;
         $this->db = new Database();
+        $this->db->getConnection()->beginTransaction();
     }
 
     public function changeEntityClass(string $entityClass): void
