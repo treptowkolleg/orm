@@ -30,6 +30,23 @@ class EntityManager
         $this->db->beginTransaction();
     }
 
+    public function dropTable(object|string $entity): void
+    {
+        if(is_string($entity)) {
+            $entity = new $entity();
+        }
+        try {
+            $this->reflectionClass = new \ReflectionClass($entity);
+            $this->setTableName();
+            $query = "DROP TABLE IF EXISTS {$this->tableName}";
+            $statement = $this->db->prepare($query);
+            $statement->execute();
+            $this->reset();
+        } catch (\ReflectionException $e) {
+
+        }
+    }
+
     public function createTable(object|string $entity): void
     {
         if(is_string($entity)) {
@@ -135,6 +152,9 @@ class EntityManager
         $this->columns = [];
         $this->query = [];
         $this->parameters = [];
+        $this->tableColumns = [];
+        $this->tpk = "";
+        $this->fk = [];
     }
 
     public function flush(): void
