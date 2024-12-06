@@ -28,14 +28,15 @@ class EntityManager
     {
         $db = new Database();
         $this->db = $db->getConnection();
-        $dbName = getenv('DB_NAME') ?: null;
-        $this->createTable($dbName);
         $this->db->beginTransaction();
     }
 
-    private function createDatabase(?string $dbName): void
+    public function createDatabase(?string $dbName): void
     {
         $query = "CREATE DATABASE IF NOT EXISTS $dbName DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
+        $statement = $this->db->prepare($query);
+        $statement->execute();
+        $this->reset();
     }
 
     public function dropTable(object|string $entity): void
