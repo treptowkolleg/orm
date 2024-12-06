@@ -26,8 +26,16 @@ class EntityManager
 
     public function __construct()
     {
-        $this->db = (new Database())->getConnection();
+        $db = new Database();
+        $this->db = $db->getConnection();
+        $dbName = getenv('DB_NAME') ?: null;
+        $this->createTable($dbName);
         $this->db->beginTransaction();
+    }
+
+    private function createDatabase(?string $dbName): void
+    {
+        $query = "CREATE DATABASE IF NOT EXISTS $dbName DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
     }
 
     public function dropTable(object|string $entity): void
@@ -156,6 +164,8 @@ class EntityManager
         $this->tableColumns = [];
         $this->tpk = "";
         $this->fk = [];
+        if(!$this->db->inTransaction())
+            $this->db->beginTransaction();
     }
 
     public function flush(): void
