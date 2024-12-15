@@ -139,10 +139,11 @@ class EntityManager
                 $this->db->beginTransaction();
             foreach ($properties as $property) {
                 if(!empty($property->getAttributes(Id::class))) {
-                    print_r($property->getValue($entity));
                     if (null != $property->getValue($entity)) {
+                        echo "UPDATE\n";
                         $this->update();
                     } else {
+                        echo "INSERT\n";
                         $this->insert();
                     }
                     break;
@@ -218,6 +219,7 @@ class EntityManager
 
         foreach($this->parameters as $key => $value) {
             $statement->bindValue($key, $value);
+            if (defined('DEBUG')) echo "$key: $value\n";
         }
         if($update) $statement->bindValue(":" . key($this->primaryKey),$this->primaryKey[key($this->primaryKey)]);
         $statement->execute();
