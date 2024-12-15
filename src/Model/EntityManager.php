@@ -139,7 +139,7 @@ class EntityManager
                 $this->db->beginTransaction();
             foreach ($properties as $property) {
                 if(!empty($property->getAttributes(Id::class))) {
-                    if (null !== $property->getValue($entity)) {
+                    if (null != $property->getValue($entity)) {
                         $this->update();
                     } else {
                         $this->insert();
