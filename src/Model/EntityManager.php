@@ -219,7 +219,7 @@ class EntityManager
 
         foreach($this->parameters as $key => $value) {
             $statement->bindValue($key, $value);
-            if (defined('DEBUG')) echo "$key: $value\n";
+            if(defined('DEBUG')) echo "$key: $value\n";
         }
         if($update) $statement->bindValue(":" . key($this->primaryKey),$this->primaryKey[key($this->primaryKey)]);
         $statement->execute();
