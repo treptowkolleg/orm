@@ -140,10 +140,8 @@ class EntityManager
             foreach ($properties as $property) {
                 if(!empty($property->getAttributes(Id::class))) {
                     if (null != $property->getValue($entity)) {
-                        echo "UPDATE\n";
                         $this->update();
                     } else {
-                        echo "INSERT\n";
                         $this->insert();
                     }
                     break;
