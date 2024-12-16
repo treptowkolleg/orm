@@ -97,7 +97,6 @@ class EntityManager
                         $this->tableColumns[$propertyName]["type"] .= "({$attribute->getLength()})";
                     }
                     if($attribute->getType() == Types::Json){
-                        $this->tableColumns[$propertyName]["type"] .= "CHECK (JSON_VALID($propertyName))";
                         $this->tableColumns[$propertyName]["null"] = "";
                     }
                     if($attribute->getType() != Types::Json) {
