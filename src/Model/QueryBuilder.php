@@ -5,6 +5,8 @@ namespace TreptowKolleg\ORM\Model;
 use ReflectionClass;
 use ReflectionException;
 use TreptowKolleg\ORM\ORM\Column;
+use TreptowKolleg\ORM\ORM\CreatedAt;
+use TreptowKolleg\ORM\ORM\UpdatedAt;
 
 class QueryBuilder
 {
@@ -59,7 +61,7 @@ class QueryBuilder
         $entityProperties = $this->reflectionClass->getProperties();
         $columns = false;
         foreach ($entityProperties as $property) {
-            if(!empty($property->getAttributes(Column::class)))
+            if(!empty($property->getAttributes(Column::class)) or !empty($property->getAttributes(CreatedAt::class)) or !empty($property->getAttributes(UpdatedAt::class)))
             {
                 $propertyNameAsArray = preg_split('/(?=[A-Z])/', $property->getName());
                 $propertyNameAsSnakeTail = strtolower(implode('_', $propertyNameAsArray));
