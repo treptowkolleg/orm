@@ -93,6 +93,11 @@ class EntityManager
                         Types::Date => "DATE",
                         Types::Json => "JSON",
                     };
+                    if($attribute->getExtra()) {
+                        $this->tableColumns[$propertyName]["extra"] = $attribute->getExtra()->value;
+                    } else {
+                        $this->tableColumns[$propertyName]["extra"] = "";
+                    }
                     if($attribute->getType() == Types::String){
                         $this->tableColumns[$propertyName]["type"] .= "({$attribute->getLength()})";
                     }
@@ -115,7 +120,7 @@ class EntityManager
 
         $query = "CREATE TABLE IF NOT EXISTS $this->tableName (";
         foreach ($this->tableColumns as $name => $content) {
-            $query .= "$name {$content["type"]} {$content["null"]} {$content["unique"]}";
+            $query .= "$name {$content["type"]} {$content["null"]} {$content["unique"]} {$content["extra"]}";
             if(array_key_exists("ai", $content)) {
                 $query .= " {$content["ai"]}";
             }

@@ -11,13 +11,16 @@ namespace TreptowKolleg\ORM\ORM;
     private bool $unique;
     private bool $nullable;
 
-    public function __construct(string $name = null, Types $type = Types::String, int $length = 255, bool $unique = false, bool $nullable = false)
+    private ?Extra $extra;
+
+    public function __construct(string $name = null, Types $type = Types::String, int $length = 255, bool $unique = false, bool $nullable = false, null|Extra $onUpdate = null)
     {
         $this->name = $name;
         $this->type = $type;
         $this->length = $length;
         $this->unique = $unique;
         $this->nullable = $nullable;
+        $this->extra = $onUpdate;
     }
 
     public function getName(): ?string
@@ -43,6 +46,11 @@ namespace TreptowKolleg\ORM\ORM;
     public function isNullable(): bool
     {
         return $this->nullable;
+    }
+
+    public function getExtra(): ?Extra
+    {
+        return $this->extra;
     }
 
 }
