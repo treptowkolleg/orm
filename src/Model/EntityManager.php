@@ -93,10 +93,15 @@ class EntityManager
                         Types::Date => "DATE",
                         Types::Json => "JSON",
                     };
-                    if(in_array($attribute->getType(),[Types::String, Types::Json])){
+                    if($attribute->getType() == Types::String){
                         $this->tableColumns[$propertyName]["type"] .= "({$attribute->getLength()})";
                     }
-                    $this->tableColumns[$propertyName]["null"] = $attribute->isNullable() ? "NULL" : "NOT NULL";
+                    if($attribute->getType() == Types::Json){
+                        $this->tableColumns[$propertyName]["type"] .= "CHECK (JSON_VALID($propertyName))";
+                    }
+                    if($attribute->getType() != Types::Json) {
+                        $this->tableColumns[$propertyName]["null"] = $attribute->isNullable() ? "NULL" : "NOT NULL";
+                    }
                     $this->tableColumns[$propertyName]["unique"] = $attribute->isUnique() ? "UNIQUE" : "";
                 }
                 if ($attribute instanceof ManyToOne) {
