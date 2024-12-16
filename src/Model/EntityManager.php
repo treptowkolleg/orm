@@ -90,11 +90,13 @@ class EntityManager
                     $this->tableColumns[$propertyName]["extra"] = "DEFAULT CURRENT_TIMESTAMP";
                     $this->tableColumns[$propertyName]["type"] = "DATETIME";
                     $this->tableColumns[$propertyName]["null"] = "NOT NULL";
+                    $this->tableColumns[$propertyName]["unique"] = "";
                 }
                 if($attribute instanceof UpdatedAt) {
                     $this->tableColumns[$propertyName]["extra"] = "ON UPDATE CURRENT_TIMESTAMP";
                     $this->tableColumns[$propertyName]["type"] = "DATETIME";
                     $this->tableColumns[$propertyName]["null"] = "NULL";
+                    $this->tableColumns[$propertyName]["unique"] = "";
                 }
                 if ($attribute instanceof Column) {
                     $this->tableColumns[$propertyName]["type"] = match ($attribute->getType()){
@@ -116,6 +118,7 @@ class EntityManager
                         $this->tableColumns[$propertyName]["null"] = $attribute->isNullable() ? "NULL" : "NOT NULL";
                     }
                     $this->tableColumns[$propertyName]["unique"] = $attribute->isUnique() ? "UNIQUE" : "";
+                    $this->tableColumns[$propertyName]["extra"] = "";
                 }
                 if ($attribute instanceof ManyToOne) {
                     $table = $this->generateSnakeTailString($attribute->getTargetEntity()->getShortName());
