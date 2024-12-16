@@ -96,6 +96,7 @@ class EntityManager
                         $this->tableColumns[$propertyName]["type"] .= "({$attribute->getLength()})";
                     }
                     $this->tableColumns[$propertyName]["null"] = $attribute->isNullable() ? "NULL" : "NOT NULL";
+                    $this->tableColumns[$propertyName]["unique"] = $attribute->isUnique() ? "UNIQUE" : "";
                 }
                 if ($attribute instanceof ManyToOne) {
                     $table = $this->generateSnakeTailString($attribute->getTargetEntity()->getShortName());
@@ -108,7 +109,7 @@ class EntityManager
 
         $query = "CREATE TABLE IF NOT EXISTS $this->tableName (";
         foreach ($this->tableColumns as $name => $content) {
-            $query .= "$name {$content["type"]} {$content["null"]}";
+            $query .= "$name {$content["type"]} {$content["null"]} {$content["unique"]}";
             if(array_key_exists("ai", $content)) {
                 $query .= " {$content["ai"]}";
             }
