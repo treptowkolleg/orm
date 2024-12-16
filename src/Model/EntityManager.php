@@ -261,7 +261,7 @@ class EntityManager
                 } else {
                     $extra = null;
                 }
-                if($property->isInitialized($this->entity) and $extra !== Extra::ON_CREATE_CURRENT_TIMESTAMP) {
+                if($extra !== Extra::ON_CREATE_CURRENT_TIMESTAMP) {
                     $this->columns[] = $parameter = $this->generateSnakeTailString($property->getName());
                     $this->parameters[":$parameter"] = $property->getValue($this->entity);
                 }
