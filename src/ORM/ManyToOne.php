@@ -7,7 +7,7 @@ namespace TreptowKolleg\ORM\ORM;
     private string $targetEntity;
     private string $targetColumn;
 
-    public function __construct(string $targetEntity, string $targetColumn)
+    public function __construct(string $targetEntity, string $targetColumn = "id")
     {
         $this->targetEntity = $targetEntity;
         $this->targetColumn = $targetColumn;
