@@ -44,7 +44,7 @@ abstract class Repository implements RepositoryInterface
         return match (gettype($value)) {
             'NULL' => "$key IS NULL",
             'boolean' => $value ? "$key IS NOT NULL" : "$key IS NULL",
-            'array' => "$key IN (:$key)",
+            'array' => "$key IN (".implode(',', array_map(fn($v) => ":$v", array_keys($value))).")",
             'integer', 'double', 'string' => "$key = :$key",
             default => throw new TypeNotSupportedException("Unsupported type for condition value"),
         };
@@ -91,18 +91,7 @@ abstract class Repository implements RepositoryInterface
     {
         $query = $this->queryBuilder()->selectOrm();
 
-        if(!empty($data))
-        {
-            foreach ($data as $key => $value)
-            {
-                $key = $this->generateSnakeTailString($key);
-                $query->andWhere($this->makeCondition($key, $value));
-                if(!is_bool($value))
-                {
-                    $query->setParameter($key, $value);
-                }
-            }
-        }
+        $this->setFilters($data, $query);
 
         return $query->setMaxResults(1) ->getQuery()->getOneOrNullResult();
     }
@@ -120,18 +109,7 @@ abstract class Repository implements RepositoryInterface
             ->orderBy($orderBy)
         ;
 
-        if(!empty($data))
-        {
-            foreach ($data as $key => $value)
-            {
-                $key = $this->generateSnakeTailString($key);
-                $query->andWhere($this->makeCondition($key, $value));
-                if(!is_bool($value))
-                {
-                    $query->setParameter($key, $value);
-                }
-            }
-        }
+        $this->setFilters($data, $query);
 
         if(null !== $limit)
         {
@@ -169,6 +147,30 @@ abstract class Repository implements RepositoryInterface
         }
 
         return $query->getQuery()->getResult();
+    }
+
+    /**
+     * @param array $data
+     * @param QueryBuilder $query
+     * @return void
+     * @throws TypeNotSupportedException
+     */
+    protected function setFilters(array $data, QueryBuilder $query): void
+    {
+        if (!empty($data)) {
+            foreach ($data as $key => $value) {
+                $key = $this->generateSnakeTailString($key);
+                $query->andWhere($this->makeCondition($key, $value));
+                if (!is_bool($value) and !is_array($value)) {
+                    $query->setParameter($key, $value);
+                }
+                if (is_array($value)) {
+                    foreach ($value as $subKey => $subValue) {
+                        $query->setParameter($subKey, $subValue);
+                    }
+                }
+            }
+        }
     }
 
 }
