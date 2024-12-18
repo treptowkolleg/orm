@@ -2,15 +2,22 @@
 
 namespace TreptowKolleg\ORM\Model;
 
+use PDO;
 use ReflectionClass;
 use ReflectionException;
 use TreptowKolleg\ORM\ORM\Column;
 use TreptowKolleg\ORM\ORM\CreatedAt;
 use TreptowKolleg\ORM\ORM\UpdatedAt;
 
+/**
+ * @template T
+ */
 class QueryBuilder
 {
 
+    /**
+     * @var class-string<T>
+     */
     private string $entity;
     private ReflectionClass $reflectionClass;
     private ?string $alias;
@@ -27,9 +34,15 @@ class QueryBuilder
     protected array $orderBy = [];
 
     protected \PDOStatement $statement;
-    protected \PDO $pdo;
+    protected PDO $pdo;
 
-    public function __construct(\PDO $pdo, string $entity, string $alias = null)
+    /**
+     * @param PDO $pdo
+     * @param class-string<T> $entity
+     * @param string|null $alias
+     */
+
+    public function __construct(PDO $pdo, string $entity, string $alias = null)
     {
         $this->entity = $entity;
         try {
@@ -323,7 +336,7 @@ class QueryBuilder
     }
 
     /**
-     * @return array Returns array containing designated objects
+     * @return T[] Returns array containing designated objects
      */
     public function getResult(): array
     {
@@ -336,11 +349,11 @@ class QueryBuilder
     }
 
     /**
-     * @return false|mixed Returns single row as object
+     * @return null|T Returns single row as object
      */
-    public function getOneOrNullResult(): mixed
+    public function getOneOrNullResult()
     {
-        $result = false;
+        $result = null;
         if($this->statement->execute())
         {
             $result =  $this->statement->fetchObject($this->entity);
@@ -349,11 +362,11 @@ class QueryBuilder
     }
 
     /**
-     * @return false|mixed Returns single scalar element
+     * @return null|T Returns single scalar element
      */
-    public function getSingleScalarResult(): mixed
+    public function getSingleScalarResult()
     {
-        $result = false;
+        $result = null;
         if($this->statement->execute())
         {
             if($this->statement->rowCount() == 1)
