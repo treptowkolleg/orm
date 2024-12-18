@@ -54,9 +54,13 @@ class QueryBuilder
     }
 
     /**
-     * @throws ReflectionException
+     * Setzt die Entitätsklasse für den QueryBuilder und gibt ein ReflectionClass-Objekt zurück.
+     *
+     * @param string $entity Der Name der Entitätsklasse.
+     * @return ReflectionClass Das ReflectionClass-Objekt der Entität.
+     * @throws ReflectionException Wenn die Entitätsklasse nicht gefunden wird.
      */
-    private function setEntityClass($entity): ReflectionClass
+    private function setEntityClass(string $entity): ReflectionClass
     {
         if (!class_exists($entity)) {
             throw new ReflectionException();
@@ -64,11 +68,21 @@ class QueryBuilder
         return new ReflectionClass($entity);
     }
 
+    /**
+     * Gibt den Tabellennamen basierend auf dem Entitätsnamen im Snake-Tail-Format zurück.
+     *
+     * @return string Der Tabellennamen im Snake-Tail-Format.
+     */
     private function getTableNameFromEntity(): string
     {
         return $this->generateSnakeTailString($this->reflectionClass->getShortName());
     }
 
+    /**
+     * Gibt eine durch Kommas getrennte Liste der Spalten aus der Entität zurück.
+     *
+     * @return string Eine durch Kommas getrennte Liste der Spaltennamen.
+     */
     private function getColumns(): string
     {
         $entityProperties = $this->reflectionClass->getProperties();
@@ -90,6 +104,12 @@ class QueryBuilder
         return rtrim($columns, ',');
     }
 
+    /**
+     * Wandelt eine Zeichenkette im CamelCase-Format in eine Snake-Tail-Zeichenkette um.
+     *
+     * @param string $value Der zu konvertierende String.
+     * @return string Der konvertierte String im Snake-Tail-Format.
+     */
     public function generateSnakeTailString(string $value): string
     {
         $valueAsArray = preg_split('/(?=[A-Z])/', $value);
@@ -101,8 +121,10 @@ class QueryBuilder
      */
 
     /**
-     * @param string $fields
-     * @return $this
+     * Fügt eine SELECT-Klausel mit den angegebenen Feldern zur Abfrage hinzu.
+     *
+     * @param string $fields Die auszuwählenden Felder.
+     * @return $this Der QueryBuilder, um eine Methode in einer Kette weiter aufzurufen.
      */
     public function select(string $fields): QueryBuilder
     {
@@ -111,8 +133,9 @@ class QueryBuilder
     }
 
     /**
-     * @return $this Übergibt alle Klasseneigenschaften der Sichtbarkeit "protected, public" als kommagetrennte
-     * Snake-Tail-Zeichenkette an die SQL-Abfrage
+     * Fügt eine SELECT-Klausel für alle Klasseneigenschaften mit den Attributen Column, CreatedAt oder UpdatedAt hinzu.
+     *
+     * @return $this Der QueryBuilder, um eine Methode in einer Kette weiter aufzurufen.
      */
     public function selectOrm(): QueryBuilder
     {
@@ -121,8 +144,10 @@ class QueryBuilder
     }
 
     /**
-     * @param string $fields
-     * @return $this
+     * Fügt eine SELECT DISTINCT-Klausel mit den angegebenen Feldern zur Abfrage hinzu.
+     *
+     * @param string $fields Die auszuwählenden Felder.
+     * @return $this Der QueryBuilder, um eine Methode in einer Kette weiter aufzurufen.
      */
     public function selectDistinct(string $fields): QueryBuilder
     {
@@ -131,10 +156,12 @@ class QueryBuilder
     }
 
     /**
-     * @param string $table
-     * @param string $alias
-     * @param string $condition
-     * @return $this
+     * Fügt eine INNER JOIN-Klausel mit den angegebenen Parametern hinzu.
+     *
+     * @param string $table Der Name der zu joinenden Tabelle.
+     * @param string $alias Das Alias für die Tabelle.
+     * @param string $condition Die ON-Bedingung für den JOIN.
+     * @return $this Der QueryBuilder, um eine Methode in einer Kette weiter aufzurufen.
      */
     public function join(string $table, string $alias, string $condition): QueryBuilder
     {
@@ -143,9 +170,12 @@ class QueryBuilder
     }
 
     /**
-     * @param string $table
-     * @param string $alias
-     * @return $this
+     * Fügt eine LEFT JOIN-Klausel mit den angegebenen Parametern hinzu.
+     *
+     * @param string $table Der Name der zu joinenden Tabelle.
+     * @param string $alias Das Alias für die Tabelle.
+     * @param string $condition Die ON-Bedingung für den JOIN.
+     * @return $this Der QueryBuilder, um eine Methode in einer Kette weiter aufzurufen.
      */
     public function leftJoin(string $table, string $alias, string $condition): QueryBuilder
     {
@@ -154,8 +184,10 @@ class QueryBuilder
     }
 
     /**
-     * @param string $condition
-     * @return $this
+     * Fügt eine WHERE-Klausel mit der angegebenen Bedingung hinzu (AND-Verknüpfung).
+     *
+     * @param string $condition Die WHERE-Bedingung.
+     * @return $this Der QueryBuilder, um eine Methode in einer Kette weiter aufzurufen.
      */
     public function andWhere(string $condition): QueryBuilder
     {
@@ -169,8 +201,10 @@ class QueryBuilder
     }
 
     /**
-     * @param string $condition
-     * @return $this
+     * Fügt eine WHERE-Klausel mit der angegebenen Bedingung hinzu (OR-Verknüpfung).
+     *
+     * @param string $condition Die WHERE-Bedingung.
+     * @return $this Der QueryBuilder, um eine Methode in einer Kette weiter aufzurufen.
      */
     public function orWhere(string $condition): QueryBuilder
     {
@@ -184,9 +218,11 @@ class QueryBuilder
     }
 
     /**
-     * @param string $key
-     * @param string $value
-     * @return $this
+     * Setzt einen Parameter für die Abfrage.
+     *
+     * @param string $key Der Name des Parameters.
+     * @param string $value Der Wert des Parameters.
+     * @return $this Der QueryBuilder, um eine Methode in einer Kette weiter aufzurufen.
      */
     public function setParameter(string $key, string $value): QueryBuilder
     {
@@ -195,8 +231,10 @@ class QueryBuilder
     }
 
     /**
-     * @param int $row
-     * @return $this
+     * Setzt die Zeilenzahl für die OFFSET-Klausel der Abfrage.
+     *
+     * @param int $row Die zu überspringende Anzahl von Zeilen.
+     * @return $this Der QueryBuilder, um eine Methode in einer Kette weiter aufzurufen.
      */
     public function setFirstResult(int $row): QueryBuilder
     {
@@ -205,8 +243,10 @@ class QueryBuilder
     }
 
     /**
-     * @param int $amount
-     * @return $this
+     * Setzt die maximale Anzahl von Ergebnissen für die LIMIT-Klausel der Abfrage.
+     *
+     * @param int $amount Die maximale Anzahl der Ergebnisse.
+     * @return $this Der QueryBuilder, um eine Methode in einer Kette weiter aufzurufen.
      */
     public function setMaxResults(int $amount): QueryBuilder
     {
@@ -215,10 +255,11 @@ class QueryBuilder
     }
 
     /**
-     * @param array|string $data Entweder ein assoziatives Array mit Spalten und Sortierrichtung oder eine
-     * Zeichenkette mit der sortierenden Spalte
-     * @param string $direction Laufrichtung der Sortierung entweder ASC oder DESC
-     * @return $this
+     * Fügt eine ORDER BY-Klausel mit den angegebenen Feldern und der Sortierreihenfolge hinzu.
+     *
+     * @param array|string $data Die zu sortierenden Felder oder eine einzelne Sortierbedingung.
+     * @param string $direction Die Richtung der Sortierung, entweder "ASC" oder "DESC".
+     * @return $this Der QueryBuilder, um eine Methode in einer Kette weiter aufzurufen.
      */
     public function orderBy(array|string $data, string $direction = 'asc'): QueryBuilder
     {
@@ -239,12 +280,24 @@ class QueryBuilder
         return $this;
     }
 
+    /**
+     * Fügt eine GROUP BY-Klausel mit dem angegebenen Feld zur Abfrage hinzu.
+     *
+     * @param string $field Das Feld für die GROUP BY-Klausel.
+     * @return $this Der QueryBuilder, um eine Methode in einer Kette weiter aufzurufen.
+     */
     public function groupBy(string $field): QueryBuilder
     {
         $this->groupBy[] = $field;
         return $this;
     }
 
+    /**
+     * Fügt eine HAVING-Klausel mit der angegebenen Bedingung hinzu (AND-Verknüpfung).
+     *
+     * @param string $condition Die HAVING-Bedingung.
+     * @return $this Der QueryBuilder, um eine Methode in einer Kette weiter aufzurufen.
+     */
     public function andHaving(string $condition): QueryBuilder
     {
         if(empty($this->groupConditions))
@@ -256,6 +309,12 @@ class QueryBuilder
         return $this;
     }
 
+    /**
+     * Fügt eine HAVING-Klausel mit der angegebenen Bedingung hinzu (OR-Verknüpfung).
+     *
+     * @param string $condition Die HAVING-Bedingung.
+     * @return $this Der QueryBuilder, um eine Methode in einer Kette weiter aufzurufen.
+     */
     public function orHaving(string $condition): QueryBuilder
     {
         if(empty($this->groupConditions))
@@ -268,7 +327,9 @@ class QueryBuilder
     }
 
     /**
-     * @return $this
+     * Generiert die SQL-Abfrage mit den festgelegten Parametern.
+     *
+     * @return $this Der QueryBuilder, um eine Methode in einer Kette weiter aufzurufen.
      */
     public function getQuery(): QueryBuilder
     {
@@ -336,7 +397,9 @@ class QueryBuilder
     }
 
     /**
-     * @return T[] Returns array containing designated objects
+     * Führt die SQL-Abfrage aus und gibt ein Array der Ergebnisse zurück.
+     *
+     * @return T[] Ein Array von Objekten der Entität.
      */
     public function getResult(): array
     {
@@ -349,7 +412,9 @@ class QueryBuilder
     }
 
     /**
-     * @return null|T Returns single row as object
+     * Führt die SQL-Abfrage aus und gibt ein einzelnes Ergebnis als Objekt zurück.
+     *
+     * @return null|T Ein einzelnes Entitätsobjekt oder null.
      */
     public function getOneOrNullResult()
     {
@@ -362,9 +427,11 @@ class QueryBuilder
     }
 
     /**
-     * @return null|T Returns single scalar element
+     * Führt die SQL-Abfrage aus und gibt einen einzelnen Skalaren Wert zurück.
+     *
+     * @return null|mixed Der einzelne Skalare Wert oder null.
      */
-    public function getSingleScalarResult()
+    public function getSingleScalarResult(): mixed
     {
         $result = null;
         if($this->statement->execute())
@@ -378,7 +445,9 @@ class QueryBuilder
     }
 
     /**
-     * @return false|int Returns row count
+     * Führt die SQL-Abfrage aus und gibt die Anzahl der betroffenen Zeilen zurück.
+     *
+     * @return false|int Die Anzahl der betroffenen Zeilen oder false bei einem Fehler.
      */
     public function getCountResult(): bool|int
     {
