@@ -57,7 +57,7 @@ class Repository implements RepositoryInterface
     /**
      * @return null|T
      */
-    public function find(int|string $id)
+    public function find(int|string $id): ?object
     {
         return $this->queryBuilder()
             ->selectOrm()
@@ -72,7 +72,7 @@ class Repository implements RepositoryInterface
     /**
      * @return null|T
      */
-    public function findOneBy(array $data)
+    public function findOneBy(array $data): ?object
     {
         $query = $this->queryBuilder()->selectOrm();
 
