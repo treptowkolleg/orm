@@ -41,11 +41,11 @@ abstract class Repository implements RepositoryInterface
      */
     private function makeCondition(string $key, mixed $value): string
     {
-        return match (gettype($value)) {
-            'NULL' => "$key IS NULL",
-            'boolean' => $value ? "$key IS NOT NULL" : "$key IS NULL",
-            'array' => "$key IN (".implode(',', array_map(fn($v) => ":$key" . "_" . chr(97 + $v), array_keys($value))).")",
-            'integer', 'double', 'string' => "$key = :$key",
+        return match (true) {
+            is_null($value) => "$key IS NULL",
+            is_bool($value) => $value ? "$key IS NOT NULL" : "$key IS NULL",
+            is_array($value) => "$key IN (".implode(',', array_map(fn($v) => ":$key" . "_" . chr(97 + $v), array_keys($value))).")",
+            is_int($value), is_float($value), is_string($value) => "$key = :$key",
             default => throw new TypeNotSupportedException("Unsupported type for condition value"),
         };
     }
