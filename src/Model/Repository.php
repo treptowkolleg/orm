@@ -5,7 +5,7 @@ namespace TreptowKolleg\ORM\Model;
 /**
  * @template T
  */
-class Repository implements RepositoryInterface
+abstract class Repository implements RepositoryInterface
 {
 
     /**
@@ -22,12 +22,6 @@ class Repository implements RepositoryInterface
         if ($entityClass) $this->entityClass = $entityClass;
         $this->db = new Database();
     }
-
-    public static function new(string $entityClass): Repository
-    {
-        return new self($entityClass);
-    }
-
 
     public function changeEntityClass(string $entityClass): void
     {
