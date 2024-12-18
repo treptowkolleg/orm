@@ -20,12 +20,12 @@ interface RepositoryInterface
      * @param int|null $limit Maximale Anzahl der Datensätze.
      * @param int|null $offset Erster Datensatz.
      */
-    public function findBy(array $data, array $orderBy = [], int $limit = null, int $offset = null):array;
+    public function findBy(array $data, array $orderBy = [], int $limit = null, int $offset = null);
 
     /**
      * @param array $orderBy Felder und Richtungen nach denen sortiert wird.
      * @param int|null $limit Maximale Anzahl der Datensätze.
      * @param int|null $offset Erster Datensatz.
      */
-    public function findAll(array $orderBy = [], int $limit = null, int $offset = null ):array;
+    public function findAll(array $orderBy = [], int $limit = null, int $offset = null);
 }
