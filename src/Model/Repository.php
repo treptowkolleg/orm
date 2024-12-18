@@ -166,7 +166,7 @@ abstract class Repository implements RepositoryInterface
                 }
                 if (is_array($value)) {
                     foreach ($value as $subKey => $subValue) {
-                        $query->setParameter($subKey, $subValue);
+                        $query->setParameter(chr(97 + $subKey), $subValue);
                     }
                 }
             }
