@@ -2,6 +2,10 @@
 
 namespace TreptowKolleg\ORM\Model;
 
+use TreptowKolleg\ORM\Exception\EntityNotFoundException;
+use TreptowKolleg\ORM\Exception\OrderByFormatException;
+use TreptowKolleg\ORM\Exception\TypeNotSupportedException;
+
 /**
  * @template T
  */
@@ -16,16 +20,15 @@ abstract class Repository implements RepositoryInterface
 
     /**
      * @param class-string<T> $entityClass
+     * @throws EntityNotFoundException
      */
     public function __construct(string $entityClass)
     {
-        if ($entityClass) $this->entityClass = $entityClass;
-        $this->db = new Database();
-    }
-
-    public function changeEntityClass(string $entityClass): void
-    {
+        if (!class_exists($entityClass)) {
+            throw new EntityNotFoundException("The specified entity class '$entityClass' does not exist. Please ensure the class name is correct and properly auto loaded.");
+        }
         $this->entityClass = $entityClass;
+        $this->db = new Database();
     }
 
     protected function queryBuilder(string $alias = null): QueryBuilder
@@ -33,25 +36,42 @@ abstract class Repository implements RepositoryInterface
         return new QueryBuilder($this->db->getConnection(), $this->entityClass, $alias);
     }
 
-    private function makeCondition(string $key, $value): string
+    /**
+     * @throws TypeNotSupportedException
+     */
+    private function makeCondition(string $key, mixed $value): string
     {
-        return match (strtoupper(gettype($value))) {
+        return match (gettype($value)) {
             'NULL' => "$key IS NULL",
-            'BOOLEAN' => ($value) ? "$key IS NOT NULL" : "$key IS NULL",
-            default => "$key = :$key",
+            'boolean' => $value ? "$key IS NOT NULL" : "$key IS NULL",
+            'array' => "$key IN (:$key)",
+            'integer', 'double', 'string' => "$key = :$key",
+            default => throw new TypeNotSupportedException("Unsupported type for condition value"),
         };
     }
 
-    public function generateSnakeTailString(string $value): string
+    protected function generateSnakeTailString(string $value): string
     {
         $valueAsArray = preg_split('/(?=[A-Z])/', $value);
         return strtolower(ltrim(implode('_', $valueAsArray),'_'));
     }
 
     /**
+     * @throws OrderByFormatException
+     */
+    protected function validateOrderBy(array $orderBy): void
+    {
+        foreach ($orderBy as $field => $direction) {
+            if (!in_array(strtoupper($direction), ['ASC', 'DESC'])) {
+                throw new OrderByFormatException("Invalid order direction for $field: $direction. Use 'ASC' or 'DESC'.");
+            }
+        }
+    }
+
+    /**
      * @return null|T
      */
-    public function find(int|string $id)
+    public function find(int|string $id): ?object
     {
         return $this->queryBuilder()
             ->selectOrm()
@@ -65,12 +85,13 @@ abstract class Repository implements RepositoryInterface
 
     /**
      * @return null|T
+     * @throws TypeNotSupportedException
      */
-    public function findOneBy(array $data)
+    public function findOneBy(array $data): ?object
     {
         $query = $this->queryBuilder()->selectOrm();
 
-        if(0 !== count($data))
+        if(!empty($data))
         {
             foreach ($data as $key => $value)
             {
@@ -88,15 +109,18 @@ abstract class Repository implements RepositoryInterface
 
     /**
      * @return T[]
+     * @throws TypeNotSupportedException
+     * @throws OrderByFormatException
      */
     public function findBy(array $data, array $orderBy = [], int $limit = null, int $offset = null): array
     {
+        $this->validateOrderBy($orderBy);
         $query = $this->queryBuilder()
             ->selectOrm()
             ->orderBy($orderBy)
         ;
 
-        if(0 !== count($data))
+        if(!empty($data))
         {
             foreach ($data as $key => $value)
             {
@@ -124,9 +148,11 @@ abstract class Repository implements RepositoryInterface
 
     /**
      * @return T[]
+     * @throws OrderByFormatException
      */
     public function findAll(array $orderBy = [], int $limit = null, int $offset = null): array
     {
+        $this->validateOrderBy($orderBy);
         $query = $this->queryBuilder()
             ->selectOrm()
             ->orderBy($orderBy)

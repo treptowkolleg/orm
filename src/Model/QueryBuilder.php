@@ -159,7 +159,7 @@ class QueryBuilder
      */
     public function andWhere(string $condition): QueryBuilder
     {
-        if(0 == count($this->conditions))
+        if(empty($this->conditions))
         {
             $this->conditions[] = "$condition";
         } else {
@@ -174,7 +174,7 @@ class QueryBuilder
      */
     public function orWhere(string $condition): QueryBuilder
     {
-        if(0 == count($this->conditions))
+        if(empty($this->conditions))
         {
             $this->conditions[] = "$condition";
         } else {
@@ -222,7 +222,7 @@ class QueryBuilder
      */
     public function orderBy(array|string $data, string $direction = 'asc'): QueryBuilder
     {
-        if (is_array($data) and 0 !== count($data))
+        if (is_array($data) and !empty($data))
         {
             foreach ($data as $field => $direction)
             {
@@ -247,7 +247,7 @@ class QueryBuilder
 
     public function andHaving(string $condition): QueryBuilder
     {
-        if(0 == count($this->groupConditions))
+        if(empty($this->groupConditions))
         {
             $this->groupConditions[] = "$condition";
         } else {
@@ -258,7 +258,7 @@ class QueryBuilder
 
     public function orHaving(string $condition): QueryBuilder
     {
-        if(0 == count($this->groupConditions))
+        if(empty($this->groupConditions))
         {
             $this->groupConditions[] = "$condition";
         } else {
@@ -273,7 +273,7 @@ class QueryBuilder
     public function getQuery(): QueryBuilder
     {
 
-        if(0 !== count($this->projection))
+        if(empty($this->projection))
         {
             $this->query['projection'] = "SELECT " . implode(',',$this->projection);
         } else {
@@ -287,27 +287,27 @@ class QueryBuilder
             $this->query['table'] .= " $this->alias ";
         }
 
-        if (0 !== count($this->joins))
+        if (!empty($this->joins))
         {
             $this->query['joins'] = implode(' ',$this->joins);
         }
 
-        if (0 !== count($this->conditions))
+        if (!empty($this->conditions))
         {
             $this->query['condition'] = "WHERE " . implode(' ',$this->conditions);
         }
 
-        if (0 !== count($this->groupBy))
+        if (!empty($this->groupBy))
         {
             $this->query['group'] = "GROUP BY " . implode(',',$this->groupBy);
         }
 
-        if (0 !== count($this->groupConditions))
+        if (!empty($this->groupConditions))
         {
             $this->query['group_condition'] = "HAVING " . implode(' ',$this->groupConditions);
         }
 
-        if (0 !== count($this->orderBy))
+        if (!empty($this->orderBy))
         {
             $order = "ORDER BY ";
             foreach ($this->orderBy as $key => $value)
