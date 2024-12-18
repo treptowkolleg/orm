@@ -1,8 +1,8 @@
 <?php
 
-namespace TreptowKolleg\ORM\ORM;
+namespace TreptowKolleg\ORM\Attribute;
 
-enum Types
+enum Type
 {
     case Integer;
     case String;

@@ -1,6 +1,6 @@
 <?php
 
-namespace TreptowKolleg\ORM\ORM;
+namespace TreptowKolleg\ORM\Attribute;
 
 enum Extra: string
 {

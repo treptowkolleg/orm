@@ -1,18 +1,18 @@
 <?php
 
-namespace TreptowKolleg\ORM\ORM;
+namespace TreptowKolleg\ORM\Attribute;
 
 #[\Attribute] class Column
 {
 
     private ?string $name;
-    private Types $type;
+    private Type $type;
     private int $length;
     private bool $unique;
     private bool $nullable;
 
 
-    public function __construct(string $name = null, Types $type = Types::String, int $length = 255, bool $unique = false, bool $nullable = false)
+    public function __construct(string $name = null, Type $type = Type::String, int $length = 255, bool $unique = false, bool $nullable = false)
     {
         $this->name = $name;
         $this->type = $type;
@@ -26,7 +26,7 @@ namespace TreptowKolleg\ORM\ORM;
         return $this->name;
     }
 
-    public function getType(): Types
+    public function getType(): Type
     {
         return $this->type;
     }

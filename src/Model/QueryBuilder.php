@@ -5,9 +5,9 @@ namespace TreptowKolleg\ORM\Model;
 use PDO;
 use ReflectionClass;
 use ReflectionException;
-use TreptowKolleg\ORM\ORM\Column;
-use TreptowKolleg\ORM\ORM\CreatedAt;
-use TreptowKolleg\ORM\ORM\UpdatedAt;
+use TreptowKolleg\ORM\Attribute\Column;
+use TreptowKolleg\ORM\Attribute\CreatedAt;
+use TreptowKolleg\ORM\Attribute\UpdatedAt;
 
 /**
  * @template T
