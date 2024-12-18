@@ -2,15 +2,22 @@
 
 namespace TreptowKolleg\ORM\Model;
 
-use  TreptowKolleg\ORM\ORM;
-
+/**
+ * @template T
+ */
 class Repository implements RepositoryInterface
 {
 
+    /**
+     * @var class-string<T>
+     */
     private string $entityClass;
     private Database $db;
 
-    public function __construct(string $entityClass = null)
+    /**
+     * @param class-string<T> $entityClass
+     */
+    public function __construct(string $entityClass)
     {
         if ($entityClass) $this->entityClass = $entityClass;
         $this->db = new Database();
@@ -47,6 +54,9 @@ class Repository implements RepositoryInterface
         return strtolower(ltrim(implode('_', $valueAsArray),'_'));
     }
 
+    /**
+     * @return null|T
+     */
     public function find(int|string $id)
     {
         return $this->queryBuilder()
@@ -59,6 +69,9 @@ class Repository implements RepositoryInterface
             ;
     }
 
+    /**
+     * @return null|T
+     */
     public function findOneBy(array $data)
     {
         $query = $this->queryBuilder()->selectOrm();
@@ -79,6 +92,9 @@ class Repository implements RepositoryInterface
         return $query->setMaxResults(1) ->getQuery()->getOneOrNullResult();
     }
 
+    /**
+     * @return T[]
+     */
     public function findBy(array $data, array $orderBy = [], int $limit = null, int $offset = null): array
     {
         $query = $this->queryBuilder()
@@ -112,6 +128,9 @@ class Repository implements RepositoryInterface
         return $query->getQuery()->getResult();
     }
 
+    /**
+     * @return T[]
+     */
     public function findAll(array $orderBy = [], int $limit = null, int $offset = null): array
     {
         $query = $this->queryBuilder()
