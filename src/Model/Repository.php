@@ -125,6 +125,59 @@ abstract class Repository implements RepositoryInterface
     }
 
     /**
+     * @param string $field
+     * @param string $startValue
+     * @param string $endValue
+     * @return null|T
+     */
+    public function findOneByRange(string $field, string $startValue, string $endValue): ?object
+    {
+        return $this->queryBuilder()
+            ->selectOrm()
+            ->andWhere("$field BETWEEN :start_value AND :end_value")
+            ->setMaxResults(1)
+            ->setParameter(":start_value", $startValue)
+            ->setParameter(":end_value", $endValue)
+            ->getQuery()->getOneOrNullResult()
+            ;
+    }
+
+    /**
+     * @param string $field
+     * @param string $startValue
+     * @param string $endValue
+     * @param array $orderBy
+     * @param int|null $limit
+     * @param int|null $offset
+     * @return T[]
+     * @throws OrderByFormatException
+     */
+    public function findByRange(string $field, string $startValue, string $endValue, array $orderBy = [], int $limit = null, int $offset = null): array
+    {
+        $this->validateOrderBy($orderBy);
+        $query = $this->queryBuilder()
+            ->selectOrm()
+            ->andWhere("$field BETWEEN :start_value AND :end_value")
+            ->orderBy($orderBy)
+        ;
+
+        $query->setParameter(":start_value", $startValue);
+        $query->setParameter(":end_value", $endValue);
+
+        if(null !== $limit)
+        {
+            $query->setMaxResults($limit);
+        }
+
+        if(null !== $offset)
+        {
+            $query->setFirstResult($offset);
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
+    /**
      * @return T[]
      * @throws OrderByFormatException
      */
