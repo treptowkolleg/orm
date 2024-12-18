@@ -71,7 +71,7 @@ abstract class Repository implements RepositoryInterface
     /**
      * @return null|T
      */
-    public function find(int|string $id): ?object
+    public function find(int|string $id)
     {
         return $this->queryBuilder()
             ->selectOrm()
@@ -87,7 +87,7 @@ abstract class Repository implements RepositoryInterface
      * @return null|T
      * @throws TypeNotSupportedException
      */
-    public function findOneBy(array $data): ?object
+    public function findOneBy(array $data)
     {
         $query = $this->queryBuilder()->selectOrm();
 
@@ -127,7 +127,7 @@ abstract class Repository implements RepositoryInterface
     /**
      * @return null|T
      */
-    public function findOneByLike(array $data): ?object
+    public function findOneByLike(array $data)
     {
         $query = $this->queryBuilder()->selectOrm();
 
@@ -175,7 +175,7 @@ abstract class Repository implements RepositoryInterface
      * @param string $endValue
      * @return null|T
      */
-    public function findOneByRange(string $field, string $startValue, string $endValue): ?object
+    public function findOneByRange(string $field, string $startValue, string $endValue)
     {
         return $this->queryBuilder()
             ->selectOrm()
