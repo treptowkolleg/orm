@@ -136,8 +136,8 @@ abstract class Repository implements RepositoryInterface
             ->selectOrm()
             ->andWhere("$field BETWEEN :start_value AND :end_value")
             ->setMaxResults(1)
-            ->setParameter(":start_value", $startValue)
-            ->setParameter(":end_value", $endValue)
+            ->setParameter("start_value", $startValue)
+            ->setParameter("end_value", $endValue)
             ->getQuery()->getOneOrNullResult()
             ;
     }
@@ -161,8 +161,8 @@ abstract class Repository implements RepositoryInterface
             ->orderBy($orderBy)
         ;
 
-        $query->setParameter(":start_value", $startValue);
-        $query->setParameter(":end_value", $endValue);
+        $query->setParameter("start_value", $startValue);
+        $query->setParameter("end_value", $endValue);
 
         if(null !== $limit)
         {
