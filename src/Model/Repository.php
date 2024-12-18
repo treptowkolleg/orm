@@ -125,6 +125,51 @@ abstract class Repository implements RepositoryInterface
     }
 
     /**
+     * @return null|T
+     */
+    public function findOneByLike(array $data): ?object
+    {
+        $query = $this->queryBuilder()->selectOrm();
+
+        foreach ($data as $field => $value) {
+            $query->andWhere($field.' LIKE :'.$field);
+            $query->setParameter($field, '%'.$value.'%');
+        }
+
+        return $query->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @return T[]
+     * @throws OrderByFormatException
+     */
+    public function findByLike(array $data, array $orderBy = [], int $limit = null, int $offset = null): array
+    {
+        $this->validateOrderBy($orderBy);
+        $query = $this->queryBuilder()
+            ->selectOrm()
+            ->orderBy($orderBy)
+        ;
+
+        foreach ($data as $field => $value) {
+            $query->andWhere($field.' LIKE :'.$field);
+            $query->setParameter($field, '%'.$value.'%');
+        }
+
+        if(null !== $limit)
+        {
+            $query->setMaxResults($limit);
+        }
+
+        if(null !== $offset)
+        {
+            $query->setFirstResult($offset);
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
+    /**
      * @param string $field
      * @param string $startValue
      * @param string $endValue
