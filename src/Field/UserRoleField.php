@@ -50,7 +50,7 @@ trait UserRoleField
         // Sicherstellen, dass die Rollen als Array vorliegen
         $roles = json_decode($this->roles, true);
         if ($roles === null) {
-            $roles = ['ROLE_USER'];
+            $roles = [];
         }
         // Rolle entfernen, falls sie vorhanden ist
         if (($key = array_search($role, $roles, true)) !== false) {
