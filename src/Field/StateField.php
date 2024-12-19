@@ -4,7 +4,7 @@ namespace TreptowKolleg\ORM\Field;
 
 use TreptowKolleg\ORM\Attribute as DB;
 
-class StateField
+trait StateField
 {
 
     #[DB\Column(type: DB\Type::Boolean)]
