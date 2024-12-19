@@ -25,7 +25,7 @@ trait UserRoleField
         // Sicherstellen, dass die Rollen als Array vorliegen
         $roles = json_decode($this->roles, true);
         if ($roles === null) {
-            $roles = [];
+            $roles = ['ROLE_USER'];
         }
         return in_array($role, $roles, true);
     }
