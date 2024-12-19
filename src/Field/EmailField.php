@@ -7,7 +7,7 @@ use TreptowKolleg\ORM\Attribute as DB;
 trait EmailField
 {
 
-    #[DB\Column]
+    #[DB\Column(unique: true)]
     private ?string $email = null;
 
     public function getEmail(): ?string
