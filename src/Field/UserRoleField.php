@@ -7,7 +7,7 @@ use TreptowKolleg\ORM\Attribute as DB;
 trait UserRoleField
 {
 
-    #[DB\Column(type: DB\Type::Json)]
+    #[DB\Column(type: DB\Type::Json, nullable: true)]
     private ?string $roles = null;
 
     public function getRoles(): array
