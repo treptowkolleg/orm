@@ -25,7 +25,7 @@ trait UserRoleField
         // Sicherstellen, dass die Rollen als Array vorliegen
         $roles = json_decode($this->roles, true);
         if ($roles === null) {
-            $roles = ['ROLE_USER'];
+            $roles = [];
         }
         return in_array($role, $roles, true);
     }
@@ -35,7 +35,7 @@ trait UserRoleField
         // Sicherstellen, dass die Rollen als Array vorliegen
         $roles = json_decode($this->roles, true);
         if ($roles === null) {
-            $roles = ['ROLE_USER'];
+            $roles = [];
         }
         // Rolle hinzufügen, wenn sie noch nicht vorhanden ist
         if (!in_array($role, $roles, true)) {
