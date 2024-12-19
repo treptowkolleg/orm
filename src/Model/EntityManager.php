@@ -154,6 +154,9 @@ class EntityManager
                         Type::DateTime => "DATETIME",
                         Type::Date => "DATE",
                         Type::Json => "JSON",
+                        Type::Text => "TEXT",
+                        Type::MediumText => "MEDIUMTEXT",
+                        Type::LongText => "LONGTEXT",
                     };
                     if($attribute->getType() == Type::String){
                         $this->tableColumns[$propertyName]["type"] .= "({$attribute->getLength()})";
