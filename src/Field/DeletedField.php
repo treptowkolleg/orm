@@ -37,14 +37,14 @@ trait DeletedField
         return null;
     }
 
-    /**
-     * Setzt den Löschzeitpunkt des Datensatzes.
-     *
-     * @param DateTimeImmutable $deleted Das Datum und die Uhrzeit der Löschung.
-     */
-    public function setDeleted(DateTimeImmutable $deleted): void
+    public function softDelete(): void
     {
-        $this->deleted = $deleted->format("Y-m-d H:i:s");
+        $this->deleted = (new DateTimeImmutable())->format('Y-m-d H:i:s');
+    }
+
+    public function restore(): void
+    {
+        $this->deleted = null;
     }
 
     /**
