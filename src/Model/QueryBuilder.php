@@ -334,7 +334,7 @@ class QueryBuilder
     public function getQuery(): QueryBuilder
     {
 
-        if(empty($this->projection))
+        if(!empty($this->projection))
         {
             $this->query['projection'] = "SELECT " . implode(',',$this->projection);
         } else {
