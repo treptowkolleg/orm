@@ -5,6 +5,10 @@ namespace TreptowKolleg\ORM\Field;
 use TreptowKolleg\ORM\Attribute as DB;
 use TreptowKolleg\ORM\Attribute\Type;
 
+/**
+ * Tabellenfeld mit dem Namen 'id'. Stellt den Primärschlüssel dar.
+ * Verfügt nur über einen Getter, da Einträge generiert werden.
+ */
 trait IdField
 {
 
