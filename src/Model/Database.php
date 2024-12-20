@@ -12,6 +12,9 @@ class Database
 
     public function __construct(\PDO $db = null)
     {
+        if(!defined('DEBUG')) {
+            define('DEBUG', false);
+        }
         if (null == $db) {
             $env = new Environment();
             $env->addContainer(new DatabaseContainer());
