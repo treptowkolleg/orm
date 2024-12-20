@@ -81,7 +81,7 @@ abstract class Repository implements RepositoryInterface
     {
         return match (true) {
             is_null($value) => "$key IS NULL",
-            is_bool($value) => $value ? "$key IS NOT NULL" : "$key IS NULL",
+            is_bool($value) => $value ? "$key IS TRUE" : "$key IS FALSE",
             is_array($value) => "$key IN (".implode(',', array_map(fn($v) => ":$key" . "_" . chr(97 + $v), array_keys($value))).")",
             is_int($value), is_float($value), is_string($value) => "$key = :$key",
             default => throw new TypeNotSupportedException("Unsupported type for condition value"),
