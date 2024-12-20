@@ -2,7 +2,7 @@
   "name": "treptowkolleg/orm",
   "description": "object relational manager",
   "type": "package",
-  "version": "1.0.7",
+  "version": "2.0.0",
   "license": "mit",
   "autoload": {
     "psr-4": {
