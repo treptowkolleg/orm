@@ -7,6 +7,7 @@ enum Type
     case Integer;
     case String;
     case Text;
+    case Password;
     case MediumText;
     case LongText;
     case Boolean;

@@ -43,11 +43,12 @@ trait PersonField
      * Setzt den Vornamen der Person.
      *
      * @param string $firstname Der zu setzende Vorname.
-     * @return void
+     * @return self
      */
-    public function setFirstname(string $firstname): void
+    public function setFirstname(string $firstname): static
     {
         $this->firstname = $firstname;
+        return $this;
     }
 
     /**
@@ -64,11 +65,12 @@ trait PersonField
      * Setzt den Nachnamen der Person.
      *
      * @param string $lastname Der zu setzende Nachname.
-     * @return void
+     * @return self
      */
-    public function setLastname(string $lastname): void
+    public function setLastname(string $lastname): static
     {
         $this->lastname = $lastname;
+        return $this;
     }
 
 

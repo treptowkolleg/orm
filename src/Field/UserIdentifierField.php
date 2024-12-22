@@ -3,6 +3,7 @@
 namespace TreptowKolleg\ORM\Field;
 
 use TreptowKolleg\ORM\Attribute as DB;
+use TreptowKolleg\ORM\Attribute\Type;
 
 /**
  * Trait UserIdentifierField
@@ -26,7 +27,7 @@ trait UserIdentifierField
      *
      * @var string|null
      */
-    #[DB\Column]
+    #[DB\Column(type: Type::Password)]
     private ?string $password = null;
 
     /**
@@ -43,11 +44,12 @@ trait UserIdentifierField
      * Setzt den Benutzernamen.
      *
      * @param string $username Der zu setzende Benutzername.
-     * @return void
+     * @return self
      */
-    public function setUsername(string $username): void
+    public function setUsername(string $username): static
     {
         $this->username = $username;
+        return $this;
     }
 
     /**
@@ -66,11 +68,12 @@ trait UserIdentifierField
      * **Achtung:** Das Passwort sollte vor dem Speichern gehasht werden.
      *
      * @param string $password Das zu setzende Passwort.
-     * @return void
+     * @return self
      */
-    public function setPassword(string $password): void
+    public function setPassword(string $password): static
     {
         $this->password = $password;
+        return $this;
     }
 
 }

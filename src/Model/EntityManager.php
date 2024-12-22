@@ -149,7 +149,7 @@ class EntityManager
                     $this->tableColumns[$propertyName]["type"] = match ($attribute->getType()){
                         Type::Integer, Type::ManyToOne => "INT",
                         Type::OneToMany, Type::ManyToMany => null,
-                        Type::String => "VARCHAR",
+                        Type::String, Type::Password => "VARCHAR",
                         Type::Boolean => "TINYINT",
                         Type::DateTime => "DATETIME",
                         Type::Date => "DATE",
