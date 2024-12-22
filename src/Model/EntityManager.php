@@ -262,6 +262,28 @@ class EntityManager
         }
     }
 
+    public function remove(object $entity): void
+    {
+        try {
+            $this->reflectionClass = new \ReflectionClass($entity);
+            $this->entity = $entity;
+            $properties = $this->reflectionClass->getProperties();
+            if(!$this->db->inTransaction())
+                $this->db->beginTransaction();
+            foreach ($properties as $property) {
+                if(!empty($property->getAttributes(Id::class))) {
+                    if (null != $property->getValue($entity)) {
+                        $this->delete();
+                    }
+                    break;
+                }
+            }
+
+        } catch (\ReflectionException $e) {
+
+        }
+    }
+
     private function reset(): void
     {
         $this->reflectionClass = null;
@@ -333,6 +355,26 @@ class EntityManager
     public function rollback(): void
     {
         $this->db->rollBack();
+    }
+
+    private function delete(): void
+    {
+        $this->setTableName();
+        $this->query[] = "DELETE FROM {$this->tableName}";
+        $this->query[] = "WHERE id = :id";
+        $this->parameters["id"] = $this->entity->getId();
+
+        $statement = $this->db->prepare($query =implode(" ", $this->query));
+
+        if(DEBUG) echo "$query\n";
+
+        foreach($this->parameters as $key => $value) {
+            $statement->bindValue($key, $value);
+            if(DEBUG) echo "$key: $value\n";
+        }
+
+        self::execute($statement);
+        $this->reset();
     }
 
     private function update(): void
