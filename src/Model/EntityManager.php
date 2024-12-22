@@ -158,7 +158,7 @@ class EntityManager
                         Type::MediumText => "MEDIUMTEXT",
                         Type::LongText => "LONGTEXT",
                     };
-                    if($attribute->getType() == Type::String){
+                    if($attribute->getType() == Type::String || $attribute->getType() == Type::Password){
                         $this->tableColumns[$propertyName]["type"] .= "({$attribute->getLength()})";
                     }
                     if($attribute->getType() == Type::Json){
