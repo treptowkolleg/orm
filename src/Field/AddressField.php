@@ -66,11 +66,12 @@ trait AddressField
      * Setzt die Straße der Adresse.
      *
      * @param string $street Die Straße.
-     * @return void
+     * @return self
      */
-    public function setStreet(string $street): void
+    public function setStreet(string $street): static
     {
         $this->street = $street;
+        return $this;
     }
 
     /**
@@ -87,11 +88,12 @@ trait AddressField
      * Setzt die Hausnummer der Adresse.
      *
      * @param string|null $streetNr Die Hausnummer oder null.
-     * @return void
+     * @return self
      */
-    public function setStreetNr(?string $streetNr): void
+    public function setStreetNr(?string $streetNr): static
     {
         $this->streetNr = $streetNr;
+        return $this;
     }
 
     /**
@@ -108,11 +110,12 @@ trait AddressField
      * Setzt die Postleitzahl der Adresse.
      *
      * @param int $postalCode Die Postleitzahl.
-     * @return void
+     * @return self
      */
-    public function setPostalCode(int $postalCode): void
+    public function setPostalCode(int $postalCode): static
     {
         $this->postalCode = $postalCode;
+        return $this;
     }
 
     /**
@@ -129,11 +132,12 @@ trait AddressField
      * Setzt die Stadt der Adresse.
      *
      * @param string $city Die Stadt.
-     * @return void
+     * @return self
      */
-    public function setCity(string $city): void
+    public function setCity(string $city): static
     {
         $this->city = $city;
+        return $this;
     }
 
     /**
@@ -150,11 +154,12 @@ trait AddressField
      * Setzt das Land der Adresse.
      *
      * @param string $country Das Land.
-     * @return void
+     * @return self
      */
-    public function setCountry(string $country): void
+    public function setCountry(string $country): static
     {
         $this->country = $country;
+        return $this;
     }
 
 }

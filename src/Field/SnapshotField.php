@@ -25,10 +25,12 @@ trait SnapshotField
      * Speichert den aktuellen Zustand des Objekts.
      *
      * @param object $object
+     * @return self
      */
-    public function setState(object $object): void
+    public function setState(object $object): static
     {
         $this->state = serialize($object);
+        return $this;
     }
 
     /**

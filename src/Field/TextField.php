@@ -25,11 +25,12 @@ trait TextField
      * Setzt den Textinhalt des Elements.
      *
      * @param string $text Der zu setzende Text.
-     * @return void
+     * @return self
      */
-    public function setText(string $text): void
+    public function setText(string $text): static
     {
         $this->text = $text;
+        return $this;
     }
 
     /**

@@ -34,14 +34,15 @@ trait EmailField
      * Setzt die E-Mail-Adresse des Elements.
      *
      * @param string $email Die zu setzende E-Mail-Adresse.
-     * @return void
+     * @return self
      */
-    public function setEmail(string $email): void
+    public function setEmail(string $email): static
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new \InvalidArgumentException("Ungültige E-Mail-Adresse.");
         }
         $this->email = $email;
+        return $this;
     }
 
 }

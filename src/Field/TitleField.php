@@ -24,11 +24,12 @@ trait TitleField
      * Setzt den Titel des Elements.
      *
      * @param string $title Der zu setzende Titel.
-     * @return void
+     * @return self
      */
-    public function setTitle(string $title): void
+    public function setTitle(string $title): static
     {
         $this->title = $title;
+        return $this;
     }
 
     /**

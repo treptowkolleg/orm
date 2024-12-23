@@ -15,14 +15,16 @@ trait StateField
         return $this->isActive;
     }
 
-    public function deactivate(): void
+    public function deactivate(): static
     {
         $this->isActive = false;
+        return $this;
     }
 
-    public function activate(): void
+    public function activate(): static
     {
         $this->isActive = true;
+        return $this;
     }
 
 }

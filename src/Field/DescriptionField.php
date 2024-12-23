@@ -24,11 +24,12 @@ trait DescriptionField
      * Setzt die Beschreibung des Elements.
      *
      * @param string $description Die zu setzende Beschreibung.
-     * @return void
+     * @return self
      */
-    public function setDescription(string $description): void
+    public function setDescription(string $description): static
     {
         $this->description = $description;
+        return $this;
     }
 
     /**

@@ -14,10 +14,11 @@ trait UserRoleField
     {
         $roleArray = json_decode($this->roles, true);
         if ($roleArray === null) {
-            $roleArray = [];
+            $roleArray[] = 'ROLE_USER';
+        } elseif (!in_array('ROLE_USER', $roleArray)) {
+            $roleArray[] = 'ROLE_USER';
         }
-        // Füge immer die Rolle 'ROLE_USER' hinzu, falls sie nicht vorhanden ist.
-        return array_merge($roleArray, ['ROLE_USER']);
+        return $roleArray;
     }
 
     public function hasRole(string $role): bool
@@ -30,7 +31,7 @@ trait UserRoleField
         return in_array($role, $roles, true);
     }
 
-    public function addRole(string $role): void
+    public function addRole(string $role): static
     {
         // Sicherstellen, dass die Rollen als Array vorliegen
         $roles = json_decode($this->roles, true);
@@ -43,6 +44,8 @@ trait UserRoleField
             // Speichere die geänderten Rollen wieder als JSON-String
             $this->roles = json_encode($roles);
         }
+
+        return $this;
     }
 
     public function removeRole(string $role): void
